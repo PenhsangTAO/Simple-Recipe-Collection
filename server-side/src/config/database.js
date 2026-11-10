@@ -11,3 +11,5 @@ const connectDB = async () => {
 }
 
 export default connectDB
+
+// this file is for connecting the back-end side to the MongoDB (mongoose is from MongoDB)
