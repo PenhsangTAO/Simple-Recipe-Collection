@@ -1,6 +1,6 @@
 import { User } from "../model/user.model.js";
 
-const regUser = async (req, res) => {
+export const regUser = async (req, res) => {
     try {
         const { username, email, password } = req.body
 
@@ -32,4 +32,40 @@ const regUser = async (req, res) => {
 
 }
 
-export default regUser
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log("1. Received Email", email);
+
+        const user = await User.findOne({
+            email: email.toLowerCase()
+        })
+
+        if (!user) return res.status(400).json({
+            message: "User not found."
+        })
+
+        // Password Comparing
+        const isMatching = await User.comparePassword(password);
+        if (!isMatching) {
+            return res.status(400).json({
+                message: "Invalid Email/Password"
+            })
+        }
+        res.status(200).json({
+            message: "Welcome back.",
+            user: {
+                id: user.id,
+                email: user.email,
+                username: user.username
+            }
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export default { regUser, loginUser }
