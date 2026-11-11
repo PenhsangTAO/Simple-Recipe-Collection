@@ -7,14 +7,13 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-
-  const fetchAPI = async () => {
-    const response = await axios.get("http://localhost:8000/api")
-  }
+  const [data, setData] = useState({})
 
   useEffect(() => {
-    fetchAPI();
+    axios.get("/api").then((res) => { setData(res.data) })
   }, [])
+
+
   return (
     <>
       <section id="center">
@@ -25,6 +24,8 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <h1>{data.message}</h1>
+          <h1>{data.message1}</h1>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>

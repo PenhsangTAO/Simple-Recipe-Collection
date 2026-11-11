@@ -1,13 +1,14 @@
 import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import app from "./app.js";
-import cors from "cors"
 
-const corsOption = {
-  origin: ["http://localhost:5173"],
-};
 
-app.use(cors(corsOption))
+app.get("/api", (req, res) => {
+  res.status(200).json({
+    message: "Hello World",
+    message1: "Hello Worldzzzzzzzzzzzzz"
+  })
+})
 
 dotenv.config({
   path: './.env'
