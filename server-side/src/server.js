@@ -10,6 +10,8 @@ app.get("/api", (req, res) => {
   })
 })
 
+app.get("/recipes", recipeRoutes)
+
 dotenv.config({
   path: './.env'
 })
