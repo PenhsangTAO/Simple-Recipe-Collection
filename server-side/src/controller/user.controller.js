@@ -1,4 +1,11 @@
+import jwt from "jsonwebtoken"
 import { User } from "../model/user.model.js";
+
+const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me"
+
+const signToken = (userId) => {
+    jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: "7d" })
+}
 
 export const regUser = async (req, res) => {
     try {
@@ -7,22 +14,33 @@ export const regUser = async (req, res) => {
 
         if (!username || !email || !password) {
             return res.status(400).json({ message: "All Field Are Required!" })
-        }
+        };
 
-        const existing = await User.findOne({ email: email.toLowerCase() })
+        if (password.length < 8) {
+            return res.status(400).json({ message: "Password Must be at least 8 characters." })
+        };
+
+        const normalEmail = email.toLowerCase().trim()
+        const cleanUsername = username.trim()
+
+        const existing = await User.findOne({ email: normalEmail })
         if (existing) {
             return res.status(400).json({ message: "There an existing account for this email" })
-        }
+        };
 
 
         const user = await User.create({
-            username,
-            email,
+            username: cleanUsername,
+            email: normalEmail,
             password,
             loggedIn: false
         })
+
+        const token = signToken(user._id);
+
         return res.status(200).json({
             message: "User created successfully!",
+            token,
             user: { id: user._id, email: user.email, username: user.username }
         })
 
@@ -46,7 +64,7 @@ export const loginUser = async (req, res) => {
         })
 
         // Password Comparing
-        const isMatching = await User.comparePassword(password);
+        const isMatching = await user.comparePassword(password);
         if (!isMatching) {
             return res.status(400).json({
                 message: "Invalid Email/Password"
@@ -58,7 +76,8 @@ export const loginUser = async (req, res) => {
                 id: user.id,
                 email: user.email,
                 username: user.username
-            }
+            },
+            token,
         })
 
     } catch (error) {
