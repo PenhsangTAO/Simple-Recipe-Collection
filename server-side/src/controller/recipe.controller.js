@@ -1,6 +1,6 @@
-import { recipe } from "../model/recipe";
+import { recipe } from "../model/recipe.js";
 
-exports.create = async (req, res) => {
+export const recipeController = async (req, res) => {
     try {
         const { title, description = "", ingredients, steps, imageUrl, tags = [] } = req.body;
 
@@ -71,4 +71,6 @@ exports.create = async (req, res) => {
         console.error("create recipe error:", error);
         return res.status(500).json({ error: "failed to create recipe." })
     }
-} 
+}
+
+export default recipeController

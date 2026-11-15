@@ -3,6 +3,7 @@ import connectDB from "./config/database.js";
 import app from "./app.js";
 
 
+
 app.get("/api", (req, res) => {
   res.status(200).json({
     message: "Hello World",
@@ -10,7 +11,11 @@ app.get("/api", (req, res) => {
   })
 })
 
-app.get("/recipes", recipeRoutes)
+app.get("/recipes", (req, res) => {
+  return res.status(200).json({
+    message: "from recipe"
+  })
+})
 
 dotenv.config({
   path: './.env'

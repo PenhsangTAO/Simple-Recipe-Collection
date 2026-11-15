@@ -9,6 +9,6 @@ import userRouter from "./routing/user.route.js"
 import recipeRoutes from "./routing/recipe.js"
 
 app.use("/api/v1/users", userRouter)
-app.use("/recipes", recipeRoutes)
+app.use("/api/recipes", recipeRoutes)
 
 export default app

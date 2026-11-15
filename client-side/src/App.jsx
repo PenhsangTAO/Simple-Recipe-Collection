@@ -10,9 +10,19 @@ function App() {
   const [data, setData] = useState({})
 
   useEffect(() => {
-    axios.get("/api").then((res) => { setData(res.data) })
+    axios.get("/api").then((res) => {
+      setData((prev) => ({ ...prev, api: res.data }));
+    });
   }, [])
 
+  useEffect(() => {
+    axios.get("/register").then((res) => {
+      setData((prev) => ({ ...prev, register: res.data }));
+    });
+  }, [])
+
+  if (!data.api) return <p>Loading...</p>
+  if (!data.register) return <p>Loading...</p>
 
   return (
     <>
@@ -24,8 +34,11 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
-          <h1>{data.message}</h1>
-          <h1>{data.message1}</h1>
+          <>
+            <h1>{data.api.message}</h1>
+            <h1>{data.api.message1}</h1>
+            <h1>{data.register.message}</h1>
+          </>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
