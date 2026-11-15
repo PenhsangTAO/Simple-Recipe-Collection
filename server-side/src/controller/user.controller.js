@@ -38,7 +38,7 @@ export const loginUser = async (req, res) => {
         console.log("1. Received Email", email);
 
         const user = await User.findOne({
-            email: email.toLowerCase()
+            email: email.toLowerCase().select("+password")
         })
 
         if (!user) return res.status(400).json({
