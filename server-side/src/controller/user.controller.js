@@ -45,6 +45,7 @@ export const regUser = async (req, res) => {
         })
 
     } catch (error) {
+        console.error("register error", error)
         return res.status(500).json({ message: "Internal Server is down currently, Please Try Again." })
     }
 
@@ -100,4 +101,4 @@ export const me = async (req, res) => {
     }
 }
 
-export default { regUser, loginUser }
+export default { regUser, loginUser, me }

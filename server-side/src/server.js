@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import app from "./app.js";
 
-
+console.log('+++ SERVER STARTING +++')
 
 app.get("/api", (req, res) => {
   res.status(200).json({

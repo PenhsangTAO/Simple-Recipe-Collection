@@ -73,4 +73,15 @@ export const recipeController = async (req, res) => {
     }
 }
 
+export const recipeList = async (req, res) => {
+    try {
+        const recipes = await recipe.find().sort({ createdAt: -1 });
+        return res.json(recipes);     // ← array directly, using res.json
+    } catch (err) {
+        console.error("list error:", err);
+        return res.status(500).json({ error: "failed to fetch recipes" });
+    }
+}
+
+
 export default recipeController
