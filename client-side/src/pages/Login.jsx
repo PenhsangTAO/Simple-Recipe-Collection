@@ -5,7 +5,7 @@ import { useAuth } from "../context/authContext";
 export default function Login() {
     const { login } = useAuth();
     const navigate = useNavigate();
-    const [form, setForm] = useState({ identifier: "", password: "" });
+    const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });

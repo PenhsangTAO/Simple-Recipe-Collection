@@ -12,8 +12,7 @@ export default function BrowseRecipes() {
         client
             .get("/recipes")
             .then((res) => {
-                const data = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
-                setRecipes(data);
+                setRecipes(res.data);
             })
             .catch((err) => console.error("fetch failed:", err));
     }, []);

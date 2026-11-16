@@ -16,7 +16,7 @@ export const recipeController = async (req, res) => {
             return res.status(400).json({ error: "ingredients must be consist of non-empty array." })
         }
 
-        if (!Array.isArray(steps) || steps.length < 1) {
+        if (!Array.isArray(steps) || steps.length === 0 || !steps.every(step => typeof step === "string" && step.trim().length > 0)) {
             return res.status(400).json({ error: "steps must be consist of non-empty array." })
         }
 
@@ -25,10 +25,10 @@ export const recipeController = async (req, res) => {
         const cleanDescription =
             typeof description === "string" ? description.trim().slice(0, 120) : "";
         const cleanIngredients = ingredients
-            .map((e) => (typeof e === "string" ? i.trim() : ""))
-            .filter((e) => i.length >= 1 && i.length <= 200);
+            .map((e) => (typeof e === "string" ? e.trim() : ""))
+            .filter((e) => e.length >= 1 && e.length <= 200);
         const cleanSteps = steps
-            .map((s) => typeof s === " string" ? s.trim() : "")
+            .map((s) => typeof s === "string" ? s.trim() : "")
             .filter((s) => s.length >= 1);
         const cleanTags = Array.isArray(tags)
             ? tags
@@ -40,16 +40,20 @@ export const recipeController = async (req, res) => {
                 ? imageUrl.trim()
                 : null;
 
-        if (cleanIngredients < 1) {
+        if (cleanIngredients.length < 1) {
             return res.status(400).json({ error: "ingredients must contain at least one non-empty string(word)." })
         }
         if (cleanSteps.length < 1) {
             return res.status(400).json({ error: "steps must contain at least one non-empty string(word)." })
         }
 
+
+        console.log("Steps:", steps);
+        console.log("Is array:", Array.isArray(steps));
+        console.log("Steps type:", typeof steps);
         const newRecipe = new recipe({
             title: cleanTitle,
-            descripton: cleanDescription,
+            description: cleanDescription,
             ingredients: cleanIngredients,
             steps: cleanSteps,
             imageUrl: cleanImageUrl,
@@ -60,6 +64,7 @@ export const recipeController = async (req, res) => {
 
         const saved = await newRecipe.save();
         return res.status(201).json({ saved })
+
 
 
     } catch (error) {

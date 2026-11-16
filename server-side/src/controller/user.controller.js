@@ -4,7 +4,7 @@ import { User } from "../model/user.model.js";
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me"
 
 const signToken = (userId) => {
-    jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: "7d" })
+    return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: "7d" })
 }
 
 export const regUser = async (req, res) => {
@@ -51,14 +51,15 @@ export const regUser = async (req, res) => {
 
 }
 
+
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
         console.log("1. Received Email", email);
 
         const user = await User.findOne({
-            email: email.toLowerCase().select("+password")
-        })
+            email: email.toLowerCase().trim()
+        }).select("+password")
 
         if (!user) return res.status(400).json({
             message: "User not found."
@@ -71,17 +72,21 @@ export const loginUser = async (req, res) => {
                 message: "Invalid Email/Password"
             })
         }
+
+        const token = signToken(user._id);
+
         res.status(200).json({
             message: "Welcome back.",
+            token,
             user: {
                 id: user.id,
                 email: user.email,
                 username: user.username
             },
-            token,
         })
 
     } catch (error) {
+        console.error("full error:", error);
         res.status(500).json({
             message: "Internal Server Error"
         })

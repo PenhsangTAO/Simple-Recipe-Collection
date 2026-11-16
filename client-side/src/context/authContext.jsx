@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
             return;
         }
         client
-            .get("/auth/me")
+            .get("/users/me")
             .then((res) => setUser(res.data.user))
             .catch(() => localStorage.removeItem("token"))
             .finally(() => setLoading(false));
@@ -29,8 +29,8 @@ export function AuthProvider({ children }) {
         return res.data;
     };
 
-    const login = async ({ identifier, password }) => {
-        const res = await client.post("/users/login", { identifier, password });
+    const login = async ({ username, email, password }) => {
+        const res = await client.post("/users/login", { username, email, password });
         localStorage.setItem("token", res.data.token);
         setUser(res.data.user);
         return res.data;
