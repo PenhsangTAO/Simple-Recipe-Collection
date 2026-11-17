@@ -13,8 +13,10 @@ export default function BrowseRecipes() {
             .get("/recipes")
             .then((res) => {
                 setRecipes(res.data);
+                setLoading(false)
             })
             .catch((err) => console.error("fetch failed:", err));
+        setLoading(false)
     }, []);
 
     if (loading) return <p>Loading recipes...</p>;
