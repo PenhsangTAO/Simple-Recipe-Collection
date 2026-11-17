@@ -80,12 +80,21 @@ export const recipeController = async (req, res) => {
 
 export const recipeList = async (req, res) => {
     try {
-        const recipes = await recipe.find().sort({ createdAt: -1 });
-        return res.json(recipes);     // ← array directly, using res.json
+        const recipes = await recipe
+            .find()
+            .sort({ createdAt: -1 })
+            .select("title description imageUrl tags avgRating authorId createdAI");
+        return res.json(recipes);
     } catch (err) {
         console.error("list error:", err);
         return res.status(500).json({ error: "failed to fetch recipes" });
     }
+}
+
+getById: async (req, res) => {
+    const recipe = await recipe.findById(req.param.id)
+    if (!recipe) return res.status(404).json({ message: "recipe not found" })
+    return res.json(recipe)
 }
 
 
