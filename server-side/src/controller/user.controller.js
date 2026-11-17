@@ -68,6 +68,7 @@ export const loginUser = async (req, res) => {
         // Password Comparing
         const isMatching = await user.comparePassword(password);
         if (!isMatching) {
+            console.log("Wrong Password or Email.")
             return res.status(400).json({
                 message: "Invalid Email/Password"
             })

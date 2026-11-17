@@ -17,7 +17,7 @@ export default function Login() {
             await login(form);
             navigate("/");
         } catch (err) {
-            setError(err.response?.data?.error || "login failed");
+            setError(err.response?.data?.message || "login failed");
         }
     };
 
@@ -25,7 +25,7 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
             <h2>Login</h2>
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <input name="identifier" placeholder="email or username" value={form.identifier} onChange={handleChange} required />
+            <input name="email" placeholder="email or username" value={form.email} onChange={handleChange} required />
             <input name="password" type="password" placeholder="password" value={form.password} onChange={handleChange} required />
             <button type="submit">Login</button>
         </form>
