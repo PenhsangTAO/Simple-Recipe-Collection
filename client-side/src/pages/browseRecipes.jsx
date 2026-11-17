@@ -29,7 +29,7 @@ export default function BrowseRecipes() {
             <ul>
                 {recipes.map((r) => (
                     <li key={r._id}>
-                        <Link to={`/recipe/${r._id}`}>
+                        <Link to={`/recipes/${r._id}`}>
                             <strong>{r.title}</strong>
                         </Link>
                         {r.imageUrl && <img src={r.imageUrl} alt={r.title} width="80" />}

@@ -91,11 +91,21 @@ export const recipeList = async (req, res) => {
     }
 }
 
-getById: async (req, res) => {
-    const recipe = await recipe.findById(req.param.id)
-    if (!recipe) return res.status(404).json({ message: "recipe not found" })
-    return res.json(recipe)
+export const getById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(400).json({ message: "invalid recipe id." })
+        }
+
+        const recipe = await recipe.findById(id)
+        if (!recipe) return res.status(404).json({ message: "recipe not found" })
+        return res.json(recipe)
+    } catch (error) {
+        console.error("getById error:", error)
+        return res.status(500).json({ message: "Internal Server Down." })
+    }
 }
 
 
-export default recipeController
+export default { recipeController, recipeList, getById }

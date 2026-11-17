@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import CreateRecipe from "./pages/CreateRecipe";
 import BrowseRecipes from "./pages/browseRecipes";
+import RecipeDetail from "./pages/RecipeDetail";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/" element={<BrowseRecipes />} />
           <Route path="/create" element={<CreateRecipe />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/recipes/:id" element={<RecipeDetail />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
