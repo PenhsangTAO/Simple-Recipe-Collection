@@ -1,4 +1,5 @@
 import { recipe } from "../model/recipe.js";
+import { mongoose } from "mongoose";
 
 export const recipeController = async (req, res) => {
     try {
@@ -98,9 +99,10 @@ export const getById = async (req, res) => {
             return res.status(400).json({ message: "invalid recipe id." })
         }
 
-        const recipe = await recipe.findById(id)
+        const recipes = await recipe.findById(id)
+
         if (!recipe) return res.status(404).json({ message: "recipe not found" })
-        return res.json(recipe)
+        return res.json(recipes)
     } catch (error) {
         console.error("getById error:", error)
         return res.status(500).json({ message: "Internal Server Down." })
