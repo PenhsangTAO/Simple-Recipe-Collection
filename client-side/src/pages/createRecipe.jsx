@@ -10,7 +10,7 @@ export default function CreateRecipe() {
     const [form, setForm] = useState({
         title: "",
         description: "",
-        imageUrl: "",
+        image: null,
         ingredients: [""],
         steps: [""],
         tags: "",
@@ -37,20 +37,35 @@ export default function CreateRecipe() {
         setForm({ ...form, [field]: next.length ? next : [""] });
     };
 
+    const handleImageChange = (e) => {
+        setForm({ ...form, image: e.target.files[0] })
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
-        const payload = {
-            title: form.title,
-            description: form.description,
-            imageUrl: form.imageUrl || undefined,
-            ingredients: form.ingredients.filter((s) => s.trim().length > 0),
-            steps: form.steps.filter((s) => s.trim().length > 0),
-            tags: form.tags
-                ? form.tags.split(",").map((t) => t.trim()).filter(Boolean)
-                : [],
-        };
+        const formData = new FormData();
+
+        formData.append("title", form.title)
+        formData.append("description", form.description)
+
+        formData.append("ingredients",
+            JSON.stringify(form.ingredients.filter((s) => s.trim().length > 0))
+        );
+
+        formData.append("steps",
+            JSON.stringify(form.steps.filter((s) => s.trim().length > 0))
+        );
+
+        formData.append("tags",
+            JSON.stringify(form.tags ?
+                form.tags.split(",").map((t) => t.trim()).filter(Boolean) : []
+            ));
+
+        if (form.image) {
+            formData.append("image", form.image)
+        }
+
 
         try {
             const res = await client.post("/recipes", payload);
@@ -68,7 +83,7 @@ export default function CreateRecipe() {
             <input name="title" placeholder="title" value={form.title} onChange={handleChange} required />
             <textarea name="description" placeholder="description" value={form.description} onChange={handleChange} />
 
-            <input name="imageUrl" placeholder="image URL (optional)" value={form.imageUrl} onChange={handleChange} />
+            <input placeholder="image URL (optional)" type="file" accept="image/*" onChange={handleImageChange} />
 
             <h3>Ingredients</h3>
             {form.ingredients.map((ing, i) => (

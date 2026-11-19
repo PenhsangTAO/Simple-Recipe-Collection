@@ -41,7 +41,8 @@ const recipeSchema = new Schema({
         messsage: "steps must be a non-empty array of non-empty strings"
     },
     imageUrl: {
-        type: String,
+        data: Buffer,
+        contentType: String,
         trim: true,
         default: null
     },

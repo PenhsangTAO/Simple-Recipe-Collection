@@ -36,10 +36,10 @@ export const recipeController = async (req, res) => {
                 .map((t) => (typeof t === "string" ? t.trim().toLowerCase() : ""))
                 .filter((t) => (t.length >= 1 && t.length <= 30))
             : [];
-        const cleanImageUrl =
-            typeof imageUrl === "string" && imageUrl.trim().length > 0
-                ? imageUrl.trim()
-                : null;
+        const cleanImageUrl = req.file ? {
+            data: req.file.buffer,
+            contentType: req.file.mimetype
+        } : undefined;
 
         if (cleanIngredients.length < 1) {
             return res.status(400).json({ error: "ingredients must contain at least one non-empty string(word)." })
@@ -109,5 +109,27 @@ export const getById = async (req, res) => {
     }
 }
 
+export const getRecipeImage = async (req, res) => {
+    try {
+        const foundImage = await findById(req.params.id).select("image")
 
-export default { recipeController, recipeList, getById }
+        if (!foundImage || foundImage.image?.data) {
+            return res.status(404).json({
+                message: "Image not found."
+            });
+        }
+
+        res.set("Content-Type", foundImage.image.contentType)
+
+        return res.send(foundImage.image.data);
+    } catch (error) {
+        console.error("GetImage Error:", error)
+
+        return res.status(500).json({
+            error: "Failed trying to retrieve the image."
+        });
+    }
+}
+
+
+export default { recipeController, recipeList, getById, getRecipeImage }
