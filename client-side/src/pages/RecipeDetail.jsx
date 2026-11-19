@@ -23,7 +23,11 @@ export default function RecipeDetail() {
     return (
         <div>
             <h1>{recipe.title}</h1>
-            {recipe.imageUrl && <img src={recipe.imageUrl} alt={recipe.title} />}
+            <img src={`api/recipes/${id}/image`}
+                alt={recipe.title}
+                onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                }} />
             <p>{recipe.description}</p>
 
             <h2>Ingredients</h2>

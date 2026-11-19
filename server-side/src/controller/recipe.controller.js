@@ -3,7 +3,10 @@ import { mongoose } from "mongoose";
 
 export const recipeController = async (req, res) => {
     try {
-        const { title, description = "", ingredients, steps, imageUrl, tags = [] } = req.body;
+        const { title, description = "", image } = req.body;
+        const ingredients = JSON.parse(req.body.ingredients || "[]");
+        const steps = JSON.parse(req.body.steps || "[]");
+        const tags = JSON.parse(req.body.tags || "[]");
 
         if (!title || typeof title !== "string" || title.trim().length < 1) {
             return res.status(400).json({ error: "title is required." })
@@ -36,7 +39,7 @@ export const recipeController = async (req, res) => {
                 .map((t) => (typeof t === "string" ? t.trim().toLowerCase() : ""))
                 .filter((t) => (t.length >= 1 && t.length <= 30))
             : [];
-        const cleanImageUrl = req.file ? {
+        const cleanImage = req.file ? {
             data: req.file.buffer,
             contentType: req.file.mimetype
         } : undefined;
@@ -57,7 +60,7 @@ export const recipeController = async (req, res) => {
             description: cleanDescription,
             ingredients: cleanIngredients,
             steps: cleanSteps,
-            imageUrl: cleanImageUrl,
+            image: cleanImage,
             tags: cleanTags,
             id: req.user.id,
             avgRating: 0,
