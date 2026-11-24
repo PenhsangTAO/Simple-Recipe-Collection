@@ -5,11 +5,10 @@ import { upload } from "../middleware/upload.js";
 
 const router = express.Router();
 
-router.route("/").post(auth, recipeController)
+router.post("/", auth, upload.single("image"), recipeController)
 router.route("/").get(recipeList)
 router.route("/:id").get(getById)
 
-router.post("/", auth, upload.single("image"), recipeController)
 router.get("/:id/image", getRecipeImage)
 
 // console.log(typeof recipeController?.create)

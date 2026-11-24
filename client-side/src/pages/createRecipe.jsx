@@ -68,9 +68,10 @@ export default function CreateRecipe() {
 
 
         try {
-            const res = await client.post("/recipes", payload);
+            const res = await client.post("/recipes", formData);
             navigate(`/recipes/${res.data.saved._id}`);
         } catch (err) {
+            console.error("Create Recipe Error:", err)
             setError(err.response?.data?.error || "failed to create recipe");
         }
     };

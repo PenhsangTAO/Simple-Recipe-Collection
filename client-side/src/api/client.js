@@ -2,7 +2,6 @@ import axios from "axios";
 
 const client = axios.create({
     baseURL: "/", // Vite proxy handles routing to Express
-    headers: { "Content-Type": "application/json" },
 });
 
 // Attach JWT to every request if we have one

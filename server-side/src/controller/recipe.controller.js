@@ -3,7 +3,8 @@ import { mongoose } from "mongoose";
 
 export const recipeController = async (req, res) => {
     try {
-        const { title, description = "", image } = req.body;
+
+        const { title, description = "", imageUrl } = req.body;
         const ingredients = JSON.parse(req.body.ingredients || "[]");
         const steps = JSON.parse(req.body.steps || "[]");
         const tags = JSON.parse(req.body.tags || "[]");
@@ -44,6 +45,12 @@ export const recipeController = async (req, res) => {
             contentType: req.file.mimetype
         } : undefined;
 
+        console.log("cleanImage:", cleanImage ? {
+            contentType: cleanImage.contentType,
+            dataSize: cleanImage.data.length,
+        } : "undefined");
+
+
         if (cleanIngredients.length < 1) {
             return res.status(400).json({ error: "ingredients must contain at least one non-empty string(word)." })
         }
@@ -55,6 +62,7 @@ export const recipeController = async (req, res) => {
         console.log("Steps:", steps);
         console.log("Is array:", Array.isArray(steps));
         console.log("Steps type:", typeof steps);
+
         const newRecipe = new recipe({
             title: cleanTitle,
             description: cleanDescription,
@@ -66,8 +74,18 @@ export const recipeController = async (req, res) => {
             avgRating: 0,
         });
 
+        console.log("newRecipe.image before save:", newRecipe.image ? {
+            contentType: newRecipe.image.contentType,
+            dataSize: newRecipe.image.data.length,
+        } : "MISSING");
+
         const saved = await newRecipe.save();
         return res.status(201).json({ saved })
+
+        console.log("saved.image after save:", saved.image ? {
+            contentType: saved.image.contentType,
+            dataSize: saved.image.data.length,
+        } : "MISSING");
 
 
 
@@ -114,9 +132,9 @@ export const getById = async (req, res) => {
 
 export const getRecipeImage = async (req, res) => {
     try {
-        const foundImage = await findById(req.params.id).select("image")
+        const foundImage = await recipe.findById(req.params.id).select("image")
 
-        if (!foundImage || foundImage.image?.data) {
+        if (!foundImage || !foundImage.image?.data) {
             return res.status(404).json({
                 message: "Image not found."
             });

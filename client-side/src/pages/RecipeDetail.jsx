@@ -23,7 +23,7 @@ export default function RecipeDetail() {
     return (
         <div>
             <h1>{recipe.title}</h1>
-            <img src={`api/recipes/${id}/image`}
+            <img src={`/recipes/${id}/image`}
                 alt={recipe.title}
                 onError={(e) => {
                     e.currentTarget.style.display = "none";
