@@ -1,16 +1,12 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h1>Simple Recipe Collection. </h1>
+Users post a recipe, browse/search the collection, and edit or delete their own recipes. Ratings and reviews, comments, and automatic ingredient matching are outside the required scope.
 
-Currently, two official plugins are available:
+<h2>Features</h2>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- post an item → post a recipe (the create action)
+- browse/search the board → browse/search the collection (the read/search action)
+- mark their own item resolved → edit or delete their own recipes (the ownership-scoped action — users can only manage content they posted)
+- claim verification / private messaging / automatic matching → ratings and reviews (trust/quality signals), comments (communication between users), automatic ingredient matching (smart suggestions)
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
