@@ -25,10 +25,6 @@ Users post a recipe, browse/search the collection, and edit or delete their own 
 │  │  │  └─ client.js
 │  │  ├─ App.css
 │  │  ├─ App.jsx
-│  │  ├─ assets
-│  │  │  ├─ hero.png
-│  │  │  ├─ react.svg
-│  │  │  └─ vite.svg
 │  │  ├─ components
 │  │  │  └─ Nav.jsx
 │  │  ├─ context
@@ -57,8 +53,8 @@ Users post a recipe, browse/search the collection, and edit or delete their own 
       │  └─ user.controller.js
       ├─ middleware
       │  ├─ auth.js
-      │  ├─ errorHandle.js
-      │  ├─ ownership.js
+      │  ├─ errorHandle.js 'Not yet implemented'
+      │  ├─ ownership.js 'Not yet implemented'
       │  └─ upload.js
       ├─ model
       │  ├─ recipe.js
