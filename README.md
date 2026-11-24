@@ -11,6 +11,7 @@ Users post a recipe, browse/search the collection, and edit or delete their own 
 
 <h2>Project Structure</h2>
 
+```
 ├─ client-side
 │  ├─ eslint.config.js
 │  ├─ index.html
@@ -63,6 +64,7 @@ Users post a recipe, browse/search the collection, and edit or delete their own 
       │  ├─ recipe.js
       │  └─ user.model.js
       └─ server.js
+```
 
 <h2>Prerequisites</h2>
 
@@ -124,60 +126,3 @@ The following test cases are used to verify the main functionalities, API operat
 | Retrieve Data       | Request existing recipes | Correct records are returned     |
 | Update Data         | Modify a recipe          | Changes are reflected in MongoDB |
 | Delete Data         | Delete a recipe          | Record is removed from MongoDB   |
-
-```
-Simple-Recipe-Collection
-├─ client-side
-│  ├─ eslint.config.js
-│  ├─ index.html
-│  ├─ package-lock.json
-│  ├─ package.json
-│  ├─ public
-│  │  ├─ favicon.svg
-│  │  └─ icons.svg
-│  ├─ src
-│  │  ├─ api
-│  │  │  └─ client.js
-│  │  ├─ App.css
-│  │  ├─ App.jsx
-│  │  ├─ assets
-│  │  │  ├─ hero.png
-│  │  │  ├─ react.svg
-│  │  │  └─ vite.svg
-│  │  ├─ components
-│  │  │  └─ Nav.jsx
-│  │  ├─ context
-│  │  │  └─ authContext.jsx
-│  │  ├─ index.css
-│  │  ├─ main.jsx
-│  │  └─ pages
-│  │     ├─ browseRecipes.jsx
-│  │     ├─ createRecipe.jsx
-│  │     ├─ Login.jsx
-│  │     ├─ RecipeDetail.jsx
-│  │     └─ Register.jsx
-│  └─ vite.config.js
-├─ package-lock.json
-├─ README.md
-└─ server-side
-   ├─ package-lock.json
-   ├─ package.json
-   └─ src
-      ├─ app.js
-      ├─ config
-      │  ├─ constants.js
-      │  └─ database.js
-      ├─ controller
-      │  ├─ recipe.controller.js
-      │  └─ user.controller.js
-      ├─ middleware
-      │  ├─ auth.js
-      │  ├─ errorHandle.js
-      │  ├─ ownership.js
-      │  └─ upload.js
-      ├─ model
-      │  ├─ recipe.js
-      │  └─ user.model.js
-      └─ server.js
-
-```
